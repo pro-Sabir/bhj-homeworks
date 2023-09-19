@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Игра-кликер</title>
-    <style>
-        #cookie {
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <h1>Кликни на печеньку!</h1>
-    <img id="cookie" src="cookie.png" width="100" height="100" alt="Печенька">
-    <p>Счётчик: <span id="counter">0</span></p>
 
-    <script>
         const cookie = document.getElementById('cookie');
         const counter = document.getElementById('counter');
 
@@ -37,6 +22,3 @@
 
             isCookieLarge = !isCookieLarge;
         };
-    </script>
-</body>
-</html>
