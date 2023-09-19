@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Таймер обратного отсчёта</title>
-</head>
-<body>
-    <div id="timer"></div>
-
-    <script>
-        let seconds = 60;
+let seconds = 60;
 
         function updateTimer() {
             const timerElement = document.getElementById('timer');
@@ -39,6 +30,3 @@
             }
         }
         const interval = setInterval(updateTimer, 1000);
-    </script>
-</body>
-</html>
