@@ -27,10 +27,15 @@ tooltipTriggers.forEach((trigger) => {
 // Добавляем обработчик клика на документе для закрытия подсказки
 document.addEventListener('click', function closeTooltip() {
   const tooltip = document.querySelector('.tooltip'); // Находим элемент подсказки
-  tooltip.classList.remove('tooltip_active'); // Скрываем подсказку
+  if (tooltip) {
+    tooltip.classList.remove('tooltip_active'); // Скрываем подсказку
+  }
 });
 
 // Останавливаем всплытие события клика на элементе подсказки
-document.querySelector('.tooltip').addEventListener('click', function (event) {
-  event.stopPropagation();
-});
+const tooltipElement = document.querySelector('.tooltip');
+if (tooltipElement) {
+  tooltipElement.addEventListener('click', function (event) {
+    event.stopPropagation();
+  });
+}
