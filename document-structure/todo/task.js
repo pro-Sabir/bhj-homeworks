@@ -10,9 +10,8 @@ function addTask() {
 
   // Проверяем, что текст не пустой
   if (taskText !== '') {
-    // Создаем новый элемент задачи
-    const taskItem = document.createElement('div');
-    taskItem.classList.add('task');
+    // Создаем новый элемент задачи - <li>
+    const taskItem = document.createElement('li');
 
     // Создаем элемент для заголовка задачи
     const taskTitle = document.createElement('div');
@@ -42,11 +41,15 @@ function addTask() {
 }
 
 // Добавляем обработчик события для кнопки "Добавить задачу"
-addButton.addEventListener('click', addTask);
+addButton.addEventListener('click', function (event) {
+  event.preventDefault(); // Предотвращаем стандартное действие кнопки
+  addTask();
+});
 
 // Добавляем обработчик события для поля ввода при нажатии Enter
 inputTask.addEventListener('keydown', function (event) {
   if (event.key === 'Enter') {
+    event.preventDefault(); // Предотвращаем стандартное действие Enter
     addTask();
   }
 });
