@@ -49,26 +49,40 @@ function addToCart(event) {
     const productImageRect = productImage.getBoundingClientRect();
     const cartRect = cart.getBoundingClientRect();
 
-    const xDistance = cartRect.left - productImageRect.left;
-    const yDistance = cartRect.top - productImageRect.top;
+    const startX = productImageRect.left + window.scrollX;
+    const startY = productImageRect.top + window.scrollY;
+    const endX = cartRect.left + window.scrollX;
+    const endY = cartRect.top + window.scrollY;
 
-    const stepX = xDistance / 20;
-    const stepY = yDistance / 20;
+    const xDistance = endX - startX;
+    const yDistance = endY - startY;
 
-    let currentX = productImageRect.left;
-    let currentY = productImageRect.top;
+    const animationDuration = 1000; 
+    const animationFrames = 60;
+    const animationInterval = animationDuration / animationFrames;
 
-    const animationInterval = setInterval(() => {
-      currentX += stepX;
-      currentY += stepY;
-      productImageClone.style.left = currentX + 'px';
-      productImageClone.style.top = currentY + 'px';
+    let currentX = startX;
+    let currentY = startY;
 
-      if (Math.abs(currentX - cartRect.left) < 1 && Math.abs(currentY - cartRect.top) < 1) {
-        clearInterval(animationInterval);
+    const stepX = xDistance / animationFrames;
+    const stepY = yDistance / animationFrames;
+
+    let frame = 0;
+
+    function animate() {
+      if (frame >= animationFrames) {
+        clearInterval(animationIntervalId);
         document.body.removeChild(productImageClone);
+      } else {
+        currentX += stepX;
+        currentY += stepY;
+        productImageClone.style.left = currentX + 'px';
+        productImageClone.style.top = currentY + 'px';
+        frame++;
       }
-    }, 30);
+    }
+
+    const animationIntervalId = setInterval(animate, animationInterval);
   } else {
     const cartProductElement = document.createElement('div');
     cartProductElement.classList.add('cart__product');
@@ -95,3 +109,4 @@ productElements.forEach(productElement => {
   productElement.querySelector('.product__quantity-control_dec').addEventListener('click', decreaseQuantity);
   productElement.querySelector('.product__add').addEventListener('click', addToCart);
 });
+
