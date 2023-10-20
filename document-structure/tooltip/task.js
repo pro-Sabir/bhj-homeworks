@@ -5,7 +5,14 @@ const tooltipTriggers = document.querySelectorAll('.has-tooltip');
 function showTooltip(event) {
   event.preventDefault(); // Отменяем стандартное действие ссылки
   const tooltipText = this.getAttribute('title'); // Получаем текст подсказки из атрибута title
-  const tooltip = document.querySelector('.tooltip'); // Находим элемент подсказки
+  let tooltip = this.nextElementSibling; // Ищем следующий элемент (может быть div.tooltip)
+
+  // Если элемент подсказки не существует, создаем его
+  if (!tooltip || !tooltip.classList.contains('tooltip')) {
+    tooltip = document.createElement('div');
+    tooltip.classList.add('tooltip');
+    document.body.appendChild(tooltip);
+  }
 
   // Устанавливаем текст подсказки
   tooltip.textContent = tooltipText;
@@ -25,10 +32,10 @@ tooltipTriggers.forEach((trigger) => {
 });
 
 // Добавляем обработчик клика на документе для закрытия подсказки
-document.addEventListener('click', function closeTooltip() {
+document.addEventListener('click', function closeTooltip(event) {
   const tooltip = document.querySelector('.tooltip'); // Находим элемент подсказки
-  if (tooltip) {
-    tooltip.classList.remove('tooltip_active'); // Скрываем подсказку
+  if (tooltip && !event.target.classList.contains('has-tooltip')) {
+    tooltip.classList.remove('tooltip_active'); // Скрываем подсказку, если клик был не по элементу с подсказкой
   }
 });
 
